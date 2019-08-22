@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/andregiampaolo/ribon-game/issues"
   },
-  "homepage": "https://github.com/andregiampaolo/ribon-game#readme"
+  "homepage": "https://github.com/andregiampaolo/ribon-game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
