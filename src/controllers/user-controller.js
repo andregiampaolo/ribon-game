@@ -1,5 +1,8 @@
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config();
 
 module.exports = {
     async register(req, res){
@@ -31,18 +34,22 @@ module.exports = {
             const user = await User.findOne({email}).select('+password');
 
             if(!user){
-                return res.status(400).send({error: 'User or password invalid'});
+                res.status(400).send({error: 'User or password invalid'});
             }
 
             if(! await bcryptjs.compare(password, user.password)){
-                return res.status(400).send({error: 'User or password invalid'});
+                res.status(400).send({error: 'User or password invalid'});
             }
 
+            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+                expiresIn: 86400
+            } );
+
             user.password = undefined;
-            return res.send(user);
+            res.send({user, token});
 
         } catch (error) {
-            return res.status(400).send({error: 'Authenticate failed'});
+            res.status(400).send({error: 'Authenticate failed'});
         }
     }
 };
