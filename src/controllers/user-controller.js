@@ -4,6 +4,12 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
+function generateToken( params = {}){
+    return jwt.sign(params, process.env.JWT_SECRET_KEY, {
+        expiresIn: 86400
+    });
+}
+
 module.exports = {
     async register(req, res){
         try{
@@ -41,12 +47,11 @@ module.exports = {
                 res.status(400).send({error: 'User or password invalid'});
             }
 
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-                expiresIn: 86400
-            } );
-
             user.password = undefined;
-            res.send({user, token});
+            res.send({
+                user, 
+                token : generateToken({ id: user.id })
+            });
 
         } catch (error) {
             res.status(400).send({error: 'Authenticate failed'});
