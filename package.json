@@ -1,0 +1,27 @@
+{
+  "name": "ribon-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andregiampaolo/ribon-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andregiampaolo/ribon-game/issues"
+  },
+  "homepage": "https://github.com/andregiampaolo/ribon-game#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.10"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
