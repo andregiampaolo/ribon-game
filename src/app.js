@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 const app = express();
+app.user(bodyParser.json());
 
 mongoose.connect(
     process.env.DB_CONNECTION,
