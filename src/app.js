@@ -5,7 +5,7 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.user(bodyParser.json());
+app.use(bodyParser.json());
 
 mongoose.connect(
     process.env.DB_CONNECTION,
