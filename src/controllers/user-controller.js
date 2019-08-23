@@ -20,7 +20,10 @@ module.exports = {
             
             const user = await User.create(req.body);
             user.password = undefined;
-            return res.send({ user });
+            return res.send({ 
+                user,
+                token: generateToken({ id: user.id })
+            });
         }catch(err){
             return res.status(400).send({error: 'Registration failed'});
         }
@@ -49,8 +52,8 @@ module.exports = {
 
             user.password = undefined;
             res.send({
-                user, 
-                token : generateToken({ id: user.id })
+                user,
+                token: generateToken({ id: user.id })
             });
 
         } catch (error) {
