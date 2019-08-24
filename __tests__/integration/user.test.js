@@ -51,4 +51,12 @@ describe('Registration User', () => {
             .send(user);
         expect(response.status).toBe(400);
     });
+    it('Register new user without password', async () => {
+
+        const user = { "name": "Usuario 1", "email": "usuario1@teste.com"};
+        const response = await request(app)
+            .post('/user/register')
+            .send(user);
+        expect(response.status).toBe(400);
+    });
 });
