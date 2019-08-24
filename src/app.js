@@ -1,7 +1,10 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
-require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 const app = express();
