@@ -2,7 +2,7 @@ const User = require('../../src/models/user');
 const request = require('supertest');
 const app = require('../../src/app');
 
-describe('User', () => {
+describe('Registration User', () => {
 
     beforeEach(async () => {
         await Promise.all([
@@ -37,6 +37,15 @@ describe('User', () => {
     it('Register new user without email', async () => {
 
         const user = { "name": "Usuario 1", "password": "123456" };
+        const response = await request(app)
+            .post('/user/register')
+            .send(user);
+        expect(response.status).toBe(400);
+    });
+
+    it('Register new user without name', async () => {
+
+        const user = { "email": "usuario1@teste.com", "password": "123456" };
         const response = await request(app)
             .post('/user/register')
             .send(user);
