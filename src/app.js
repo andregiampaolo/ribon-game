@@ -1,17 +1,22 @@
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
-});
-
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 3000;
+class AppController {
+    constructor(){
+        this.express = express();
 
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : false}));
+        this.middlewares();
+        this.routes();
+    }
 
+    middlewares(){
+        this.express.use(bodyParser.json());
+        this.express.use(bodyParser.urlencoded({extended : false}));
+    }
 
-app.use('/user',require('./routes/user'));
+    routes(){
+        this.express.use('/user',require('./routes/user'));
+    }
+}
 
-app.listen(port, () => console.log(`Server is running on port ${port}.`));
+module.exports = new AppController().express;
