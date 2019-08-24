@@ -1,8 +1,10 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
+
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-require('dotenv').config();
 
 function generateToken( params = {}){
     return jwt.sign(params, process.env.JWT_SECRET_KEY, {
