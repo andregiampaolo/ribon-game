@@ -18,6 +18,21 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
+    totalCollectedCoins:{
+        type: Number,
+        required: true,
+        default:0
+    },
+    totalDeaths:{
+        type: Number,
+        required: true,
+        default:0
+    },
+    totalKilledMonster:{
+        type: Number,
+        required: true,
+        default:0
+    },
     createdAt:{
         type: Date,
         default: Date.now
