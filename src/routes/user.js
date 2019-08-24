@@ -1,5 +1,4 @@
-const express = require('express');
-const routes = express.Router();
+const routes = require('express').Router();;
 const UserController = require('../controllers/user-controller');
 
 routes.get('/list', UserController.list);
