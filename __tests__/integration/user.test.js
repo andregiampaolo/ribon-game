@@ -59,4 +59,18 @@ describe('Registration User', () => {
             .send(user);
         expect(response.status).toBe(400);
     });
+
+    it('Number of users on database increase when create new user', async () => {
+
+        const quantityUsersBeforeCreate = await User.countDocuments({}, (err, quantity) => {
+            return quantity;
+        });
+        await User.create({ "name": "Usuario 1", "email": "usuario1@teste.com", "password": "123456" });
+        const quantityUsersAfterCreate = await User.countDocuments({}, (err, quantity) => {
+            return quantity;
+        });
+        expect(quantityUsersAfterCreate-1).toBe(quantityUsersBeforeCreate);
+    });
+
+
 });
