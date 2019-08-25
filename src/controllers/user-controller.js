@@ -23,7 +23,7 @@ module.exports = {
     async list(req, res){
         try {
             const users = await User.find({});
-            return res.json(users);
+            return res.send(users);
         } catch (error) {
             return res.status(400).send({error: 'List failed'});
         }
