@@ -1,5 +1,10 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 class AppController {
     constructor(){
@@ -7,6 +12,7 @@ class AppController {
 
         this.middlewares();
         this.routes();
+        this.database();
     }
 
     middlewares(){
@@ -19,6 +25,13 @@ class AppController {
         this.express.use('/collected-coin',require('./routes/collected-coin'));
         this.express.use('/death',require('./routes/death'));
         this.express.use('/killed-monster',require('./routes/killed-monster'));
+    }
+
+    database(){
+        mongoose.connect(
+            process.env.DB_CONNECTION,
+            { useNewUrlParser: true, useCreateIndex: true }
+        );
     }
 }
 
