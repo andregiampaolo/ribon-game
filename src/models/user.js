@@ -1,6 +1,10 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
+
 const mongoose = require('../database');
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -46,5 +50,12 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
+UserSchema.statics.generateToken = function(params = {}) {
+    return jwt.sign(params, process.env.JWT_SECRET_KEY, {
+        expiresIn: 86400
+    });
+};
+
 const User = mongoose.model('User', UserSchema);
+
 module.exports = User;
