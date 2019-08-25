@@ -4,7 +4,8 @@ const MonsterSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
     },
     createdAt:{
         type: Date,
