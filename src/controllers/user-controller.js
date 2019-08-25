@@ -1,16 +1,6 @@
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
-});
-
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
-function generateToken( params = {}){
-    return jwt.sign(params, process.env.JWT_SECRET_KEY, {
-        expiresIn: 86400
-    });
-}
 
 module.exports = {
     async register(req, res){
@@ -24,7 +14,7 @@ module.exports = {
             user.password = undefined;
             return res.send({ 
                 user,
-                token: generateToken({ id: user.id })
+                token: User.generateToken({ id: user.id })
             });
         }catch(err){
             return res.status(400).send({error: 'Registration failed'});
@@ -55,7 +45,7 @@ module.exports = {
             user.password = undefined;
             res.send({
                 user,
-                token: generateToken({ id: user.id })
+                token: User.generateToken({ id: user.id })
             });
 
         } catch (error) {
