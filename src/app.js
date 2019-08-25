@@ -16,6 +16,7 @@ class AppController {
 
     routes(){
         this.express.use('/user',require('./routes/user'));
+        this.express.use('/collected-coin',require('./routes/collected-coin'));
     }
 }
 
