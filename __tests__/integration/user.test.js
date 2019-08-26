@@ -1,8 +1,13 @@
 const User = require('../../src/models/user');
 const request = require('supertest');
 const app = require('../../src/app');
+const mongoose = require('mongoose');
 
 describe('Registration User', () => {
+
+    afterAll((done) => {
+        mongoose.disconnect(done);
+    });
 
     beforeEach(async () => {
         await Promise.all([
