@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('./database');
 
 class AppController {
     constructor(){
@@ -7,6 +8,7 @@ class AppController {
 
         this.middlewares();
         this.routes();
+        this.database();
     }
 
     middlewares(){
@@ -15,10 +17,15 @@ class AppController {
     }
 
     routes(){
+        this.express.use('/',require('./routes'));
         this.express.use('/user',require('./routes/user'));
         this.express.use('/collected-coin',require('./routes/collected-coin'));
         this.express.use('/death',require('./routes/death'));
         this.express.use('/killed-monster',require('./routes/killed-monster'));
+    }
+
+    database(){
+        mongoose.connect()
     }
 }
 

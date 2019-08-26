@@ -3,8 +3,13 @@ const app = require('../../src/app');
 const KilledMonster = require('../../src/models/killed-monster');
 const User = require('../../src/models/user');
 const Monster = require('../../src/models/monster');
+const mongoose = require('mongoose');
 
 describe('Killed Monster', () => {
+
+    afterAll((done) => {
+        mongoose.disconnect(done);
+    });
 
     beforeEach(async () => {
         await Promise.all([

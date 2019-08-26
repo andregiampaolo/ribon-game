@@ -2,8 +2,13 @@ const request = require('supertest');
 const app = require('../../src/app');
 const CollectedCoin = require('../../src/models/collected-coin');
 const User = require('../../src/models/user');
+const mongoose = require('mongoose');
 
 describe('Collected Coin', () => {
+
+    afterAll((done) => {
+        mongoose.disconnect(done);
+    });
 
     beforeEach(async () => {
         await Promise.all([

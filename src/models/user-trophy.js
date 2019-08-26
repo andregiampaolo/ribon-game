@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const KilledMonsterSchema = new mongoose.Schema({
+const UserTrophySchema = new mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    monster:{
+    trophy:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Monster',
+        ref: 'Trophy',
         required: true
     },
     createdAt:{
@@ -17,4 +17,4 @@ const KilledMonsterSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('KilledMonster', KilledMonsterSchema);
+module.exports = mongoose.model('UserTrophy', UserTrophySchema);

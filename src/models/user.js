@@ -2,7 +2,7 @@ require('dotenv').config({
     path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
 });
 
-const mongoose = require('../database');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -10,12 +10,14 @@ const UserSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
+        trim: true,
     },
     email:{
         type: String,
         unique: true,
         required: true,
         lowercase: true,
+        trim: true,
     },
     password:{
         type: String,
