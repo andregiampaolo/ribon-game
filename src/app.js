@@ -1,10 +1,6 @@
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
-});
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const mongoose = require('./database');
 
 class AppController {
     constructor(){
@@ -21,6 +17,7 @@ class AppController {
     }
 
     routes(){
+        this.express.use('/',require('./routes'));
         this.express.use('/user',require('./routes/user'));
         this.express.use('/collected-coin',require('./routes/collected-coin'));
         this.express.use('/death',require('./routes/death'));
@@ -28,10 +25,7 @@ class AppController {
     }
 
     database(){
-        mongoose.connect(
-            process.env.DB_CONNECTION,
-            { useNewUrlParser: true, useCreateIndex: true }
-        );
+        mongoose.connect()
     }
 }
 
