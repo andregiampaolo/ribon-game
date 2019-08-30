@@ -3,7 +3,7 @@ import './Login.css';
 
 import logo from '../assets/logo.svg'
 
-export default function Login(){
+export default function Login( { history } ){
 
     const [form, setValues] = useState({
         email: '',
@@ -13,6 +13,7 @@ export default function Login(){
     const handleSubmit = e => {
         e.preventDefault();
         console.log(form.email, form.password);
+        history.push('/game');
     }
 
     const updateField = e => {
@@ -20,7 +21,7 @@ export default function Login(){
           ...form,
           [e.target.name]: e.target.value
         });
-      };
+    };
 
     return (
         
@@ -43,6 +44,12 @@ export default function Login(){
                 />
                 <button type="submit">Jogar</button>
             </form>
+            <a
+                className="link"
+                href="/register"
+            >
+                Cadastrar
+            </a>
         </div>
 
     );
