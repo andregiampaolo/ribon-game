@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 
+import api from '../services/api';
 
 import logo from '../assets/logo.svg'
 
@@ -12,10 +13,23 @@ export default function Register( { history } ){
         password: ''
     });
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        console.log(form.name, form.email, form.password);
-        history.push('/game');
+
+        try {
+            const response = await api.post('/user/register', {
+                name : form.name,
+                email : form.email,
+                password : form.password,
+            });
+
+            const { token } = response.data;
+            history.push(`/game/${token}`);
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const updateField = e => {
@@ -44,7 +58,7 @@ export default function Register( { history } ){
                     onChange={updateField}
                 />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Digite sua senha"
                     name="password"
                     value={form.password}
