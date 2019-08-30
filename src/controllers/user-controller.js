@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const UserException = function(message) {
     this.message = message;
     this.name = "UserException";
- }
+}
 
 const userIsDuplicated = async function(email){
     if(await User.findOne( { email }))
@@ -35,7 +35,7 @@ module.exports = {
             const users = await User.find({});
             return res.send(users);
         } catch (error) {
-            return res.status(400).send({error: 'List failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     },
     async authenticate(req, res){
@@ -59,7 +59,7 @@ module.exports = {
             });
 
         } catch (error) {
-            res.status(400).send({error: 'Authenticate failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     }
 };
