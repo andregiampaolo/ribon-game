@@ -1,23 +1,33 @@
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 
+const UserException = function(message) {
+    this.message = message;
+    this.name = "UserException";
+}
+
+const userIsDuplicated = async function(email){
+    if(await User.findOne( { email }))
+        throw new UserException('User alredy exists');
+};
 
 module.exports = {
+
     async register(req, res){
         try{
             const { email } = req.body;
-            
-            if(await User.findOne( { email : email }))
-                return res.status(400).send({error: 'User alredy exists'});
+
+            await userIsDuplicated(email);
             
             const user = await User.create(req.body);
             user.password = undefined;
+            
             return res.send({ 
                 user,
                 token: User.generateToken({ id: user.id })
             });
         }catch(err){
-            return res.status(400).send({error: 'Registration failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     },
     async list(req, res){
@@ -25,7 +35,7 @@ module.exports = {
             const users = await User.find({});
             return res.send(users);
         } catch (error) {
-            return res.status(400).send({error: 'List failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     },
     async authenticate(req, res){
@@ -49,7 +59,7 @@ module.exports = {
             });
 
         } catch (error) {
-            res.status(400).send({error: 'Authenticate failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     }
 };

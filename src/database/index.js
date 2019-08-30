@@ -10,7 +10,11 @@ module.exports = {
         mongoose.Promise = Promise;
         mongoose.connect(
             process.env.DB_CONNECTION,
-            { useNewUrlParser: true, useCreateIndex: true }
+            {
+                useNewUrlParser: true,
+                useCreateIndex: true,
+                useFindAndModify: false,
+            }
         );
     },
     disconnect: (done) => {

@@ -1,4 +1,7 @@
 const Monster = require('../models/monster');
+const mongoose = require('../database');
+
+mongoose.connect();
 
 try {
     const monsters = [{"name":"Loki"},{"name":"Coringa"},{"name":"Hannibal Lecter" }];
