@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const CollectedCoin = require('../../src/models/collected-coin');
 const User = require('../../src/models/user');
+const Trophy = require('../../src/models/trophy');
 const mongoose = require('mongoose');
 
 describe('Collected Coin', () => {
@@ -14,6 +15,7 @@ describe('Collected Coin', () => {
         await Promise.all([
             User.deleteMany({})
         ]);
+        await Trophy.create({'action' : 'collected_coin', 'value': 1});
     });
 
     it('Test collect a coin on api', async () => {
