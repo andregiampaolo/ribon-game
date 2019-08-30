@@ -5,10 +5,11 @@ const UserTrophy = require('../models/user-trophy');
 const UserTrophyService = {
 
     async increaseUserTotalField(totalField, userId, valueIncrease){
+        const increase = {};
+        increase[totalField] = valueIncrease;
         return await User.findByIdAndUpdate(userId,
-            { $inc: { totalField: valueIncrease } },
-            { new: true },
-            opts
+            { $inc: increase},
+            { new: true }
         );
     },
     async getTrophyEarnedByValue(action, value){
@@ -24,7 +25,7 @@ const UserTrophyService = {
         return await UserTrophy.find({user:user.id, trophy:trophy[0].id});
     },
     async giveTrohpyToUser(userId, trophy){
-        return await UserTrophy.create({user:userId, trophy: trophy[0].id}, opts);
+        return await UserTrophy.create({user:userId, trophy: trophy[0].id});
     }
 };
 
