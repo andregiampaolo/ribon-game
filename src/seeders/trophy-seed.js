@@ -1,4 +1,7 @@
 const Trophy = require('../models/trophy');
+const mongoose = require('../database');
+
+mongoose.connect();
 
 try {
     const trophies = [
@@ -12,15 +15,15 @@ try {
         },
         {
             "action": "collected_coin",
-            "value": 1.000
+            "value": 1000
         },
         {
             "action": "collected_coin",
-            "value": 10.000
+            "value": 10000
         },
         {
             "action": "collected_coin",
-            "value": 100.000
+            "value": 100000
         },
         {
             "action": "killed_monster",
@@ -32,15 +35,15 @@ try {
         },
         {
             "action": "killed_monster",
-            "value": 1.000
+            "value": 1000
         },
         {
             "action": "killed_monster",
-            "value": 10.000
+            "value": 10000
         },
         {
             "action": "killed_monster",
-            "value": 100.000
+            "value": 100000
         },
         {
             "action": "death",
@@ -63,7 +66,8 @@ try {
             "value": 100
         },
     ];
-    trophies.map(trophy => Trophy.create(trophy));
+
+    trophies.map(trophy => { Trophy.create(trophy) });
     console.log('Trophies created');
     return true;
 } catch (error) {
