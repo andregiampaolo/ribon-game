@@ -1,0 +1,7 @@
+.hole-container{
+    margin: 2px;
+    overflow: hidden;
+    width: 10vw;
+    height: 10vw;
+    background-color:#008888;
+}
