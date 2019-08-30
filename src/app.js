@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('./database');
+const cors = require('cors');
 
 class AppController {
     constructor(){
@@ -14,6 +15,7 @@ class AppController {
     middlewares(){
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended : false}));
+        this.express.use(cors);
     }
 
     routes(){
