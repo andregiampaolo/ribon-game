@@ -24,7 +24,7 @@ module.exports = {
             return res.send({collectedCoin});
 
         } catch (err) {
-            return res.status(400).send({ error: 'Collected failed' });
+            return res.status(400).send({name: err.name, message: err.message});
         }
     },
     async list(req, res) {
@@ -32,7 +32,7 @@ module.exports = {
             const collectedCoins = await CollectedCoin.find({});
             return res.send(collectedCoins);
         } catch (error) {
-            return res.status(400).send({ error: 'List failed' });
+            return res.status(400).send({name: err.name, message: err.message});
         }
     }
 };
