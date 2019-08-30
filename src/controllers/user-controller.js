@@ -1,13 +1,17 @@
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 
-
 module.exports = {
+
+    async userIsDuplicated(email){
+        if(await User.findOne( { email }))
+            return true;
+    },
     async register(req, res){
         try{
             const { email } = req.body;
             
-            if(await User.findOne( { email : email }))
+            if(await this.userIsDuplicated(email))
                 return res.status(400).send({error: 'User alredy exists'});
             
             const user = await User.create(req.body);
