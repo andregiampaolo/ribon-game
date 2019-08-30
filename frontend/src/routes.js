@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Game from './pages/Game';
+import Dashboard from './pages/Dashboard';
 
 
 export default function Routes(){
@@ -11,7 +11,7 @@ export default function Routes(){
         <BrowserRouter>
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/game/:token" component={Game} />
+            <Route path="/dashboard/:token" component={Dashboard} />
         </BrowserRouter>
     )
 }
