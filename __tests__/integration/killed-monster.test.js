@@ -3,6 +3,7 @@ const app = require('../../src/app');
 const KilledMonster = require('../../src/models/killed-monster');
 const User = require('../../src/models/user');
 const Monster = require('../../src/models/monster');
+const Trophy = require('../../src/models/trophy');
 const mongoose = require('mongoose');
 
 describe('Killed Monster', () => {
@@ -16,6 +17,7 @@ describe('Killed Monster', () => {
             User.deleteMany({}),
             Monster.deleteMany({}),
         ]);
+        await Trophy.create({'action' : 'killed_monster', 'value': 1});
     });
 
     it('Test killed a monster on api', async () => {
