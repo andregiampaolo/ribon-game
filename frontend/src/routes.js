@@ -11,7 +11,7 @@ export default function Routes(){
         <BrowserRouter>
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/game" component={Game} />
+            <Route path="/game/:token" component={Game} />
         </BrowserRouter>
     )
 }
