@@ -1,27 +1,33 @@
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 
+const UserException = function(message) {
+    this.message = message;
+    this.name = "UserException";
+ }
+
+const userIsDuplicated = async function(email){
+    if(await User.findOne( { email }))
+        throw new UserException('User alredy exists');
+};
+
 module.exports = {
 
-    async userIsDuplicated(email){
-        if(await User.findOne( { email }))
-            return true;
-    },
     async register(req, res){
         try{
             const { email } = req.body;
-            
-            if(await this.userIsDuplicated(email))
-                return res.status(400).send({error: 'User alredy exists'});
+
+            await userIsDuplicated(email);
             
             const user = await User.create(req.body);
             user.password = undefined;
+            
             return res.send({ 
                 user,
                 token: User.generateToken({ id: user.id })
             });
         }catch(err){
-            return res.status(400).send({error: 'Registration failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     },
     async list(req, res){
