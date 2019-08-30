@@ -21,8 +21,7 @@ module.exports = {
             return res.send(killed);
             
         }catch(err){
-            console.log(err);
-            return res.status(400).send({error: 'Killed failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     }
 };
