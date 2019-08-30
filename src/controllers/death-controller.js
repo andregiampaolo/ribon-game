@@ -4,14 +4,15 @@ const UserTrohpyService = require('../services/user-trophy-service');
 module.exports = {
     async die(req, res){
         try{
-            const die = await Death.create({user: req.userId});
+            const userId = req.userId;
+            const die = await Death.create({user: userId});
             const fieldIncrease = 'totalDeaths';
             const valueIncrease = 1;
             const user = await UserTrohpyService.increaseUserTotalField(fieldIncrease, userId, valueIncrease);
-            const trophy = await UserTrohpyService.getTrophyEarnedByValue('deaths', user.totalDeaths);
+            const trophy = await UserTrohpyService.getTrophyEarnedByValue('death', user.totalDeaths);
             const userHasTrophy = await UserTrohpyService.userHasTrophy(user, trophy);
 
-            if(!userHasTrophy)
+            if(userHasTrophy.length == 0)
                 await UserTrohpyService.giveTrohpyToUser(userId, trophy);
 
             return res.send(die);
