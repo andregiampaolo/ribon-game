@@ -15,7 +15,7 @@ module.exports = {
             const trophy = await UserTrohpyService.getTrophyEarnedByValue('killed_monster', user.totalKilledMonster);
             const userHasTrophy = await UserTrohpyService.userHasTrophy(user, trophy);
 
-            if(!userHasTrophy)
+            if(userHasTrophy.length == 0)
                 await UserTrohpyService.giveTrohpyToUser(userId, trophy);
 
             return res.send(killed);
