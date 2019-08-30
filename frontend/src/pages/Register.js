@@ -24,7 +24,7 @@ export default function Register( { history } ){
             });
 
             const { token } = response.data;
-            history.push(`/game/${token}`);
+            history.push(`/dashboard/${token}`);
 
         } catch (error) {
             console.log(error);
