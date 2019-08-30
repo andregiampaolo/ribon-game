@@ -13,9 +13,9 @@ class AppController {
     }
 
     middlewares(){
+        this.express.use(cors());
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended : false}));
-        this.express.use(cors);
     }
 
     routes(){
