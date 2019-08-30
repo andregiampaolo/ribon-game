@@ -15,7 +15,7 @@ const UserTrophyService = {
     async getTrophyEarnedByValue(action, value){
         return await Trophy.find({
             action: action, 
-            value: { $lt: value }
+            value: { $lte: value }
         })
         .select('id')
         .sort({value: -1})
