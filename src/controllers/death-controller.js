@@ -17,7 +17,7 @@ module.exports = {
 
             return res.send(die);
         }catch(err){
-            return res.status(400).send({error: 'Die failed'});
+            return res.status(400).send({name: err.name, message: err.message});
         }
     }
 };
