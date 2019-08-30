@@ -18,7 +18,7 @@ module.exports = {
             const trophy = await UserTrohpyService.getTrophyEarnedByValue('collected_coin', user.totalCollectedCoins);
             const userHasTrophy = await UserTrohpyService.userHasTrophy(user, trophy);
 
-            if(!userHasTrophy)
+            if(userHasTrophy.length == 0)
                 await UserTrohpyService.giveTrohpyToUser(userId, trophy);
             
             return res.send({collectedCoin});
