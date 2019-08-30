@@ -36,7 +36,7 @@ export default function Login( { history } ){
                     onChange={updateField}
                 />
                 <input
-                    type="text"
+                    type="password"
                     placeholder="Digite sua senha"
                     name="password"
                     value={form.password}
