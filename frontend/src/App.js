@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 
-import logo from './assets/logo.svg'
+import Login from './pages/Login';
 
 function App() {
   return (
     <div className="App">
-      <img src={logo} alt="Ribon game" />
+      <Login />
     </div>
   );
 }
