@@ -69,8 +69,8 @@ try {
 
     trophies.map(trophy => { Trophy.create(trophy) });
     console.log('Trophies created');
-    return true;
 } catch (error) {
     console.log('Error: ', error);
-    return false;
 }
+
+process.exit();
