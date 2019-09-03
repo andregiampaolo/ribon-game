@@ -19,11 +19,11 @@ const connectDb = async () => {
 }
 const monsters = [{"name":"Loki"},{"name":"Coringa"},{"name":"Hannibal Lecter" }];
 
-const insertData = async () => {
+const insertMonstersOnDatabase = async () => {
     return await Promise.all( monsters.map(monster => Monster.create(monster)) );
 }
 
-const dropCollection = async () =>{
+const dropMonsterCollection = async () =>{
     return await Promise.all([
         Monster.deleteMany({})
     ]);
@@ -32,8 +32,8 @@ const dropCollection = async () =>{
 const seed = async () => {
     const db = await connectDb();
     if(db){
-        await dropCollection();
-        const result = await insertData();
+        await dropMonsterCollection();
+        const result = await insertMonstersOnDatabase();
         if(result){
             console.log('Monstros criados');
             process.exit();
