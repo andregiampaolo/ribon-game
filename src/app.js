@@ -24,6 +24,7 @@ class AppController {
         this.express.use('/collected-coin',require('./routes/collected-coin'));
         this.express.use('/death',require('./routes/death'));
         this.express.use('/killed-monster',require('./routes/killed-monster'));
+        this.express.use('/monster',require('./routes/monster'));
     }
 
     database(){
