@@ -23,10 +23,16 @@ const insertData = async () => {
     return await Promise.all( monsters.map(monster => Monster.create(monster)) );
 }
 
+const dropCollection = async () =>{
+    return await Promise.all([
+        Monster.deleteMany({})
+    ]);
+}
 
 const seed = async () => {
     const db = await connectDb();
     if(db){
+        await dropCollection();
         const result = await insertData();
         if(result){
             console.log('Monstros criados');
