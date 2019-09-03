@@ -82,16 +82,22 @@ const trophies = [
 ];
 
 
-const insertData = async () => {
+const insertTrophiesOnDatabase = async () => {
     return await Promise.all( trophies.map(async trophy => await Trophy.create(trophy) ) );
 }
 
+const dropTrophyCollection = async () =>{
+    return await Promise.all([
+        Trophy.deleteMany({})
+    ]);
+}
 
 
 const seed = async () => {
     const db = await connectDb();
     if(db){
-        const result = await insertData();
+        await dropTrophyCollection();
+        const result = await insertTrophiesOnDatabase();
         if(result){
             console.log('Troféus criados');
             process.exit();
