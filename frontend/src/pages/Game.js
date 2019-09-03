@@ -1,13 +1,11 @@
 import React from 'react';
-import Board from './Board';
+import CollectCoin from '../components/game/CollectCoin';
 
-
-export default function Game(){
-
+export default function Game( { match }){
+    
     return(
         <div>
-            <h1>Estou no game!</h1>
-            <Board />
+            <CollectCoin token={match.params.token}/>
         </div>
     )
 }
