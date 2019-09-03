@@ -13,7 +13,7 @@ export default function Routes(){
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/dashboard/:token" component={Dashboard} />
-            <Route path="/game" component={Game} />
+            <Route path="/game/:token" component={Game} />
         </BrowserRouter>
     )
 }
