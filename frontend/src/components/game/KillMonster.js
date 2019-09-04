@@ -1,57 +1,76 @@
-import React, { useState } from 'react';
+import React from 'react';
 import api from '../../services/api';
+import Select from 'react-select';
 
-export default function KillMonster ( {token} ) {
+import monsterIcon from '../../assets/monster.svg'
 
-    const [monsters, setMonsters] = useState(
-        [{'id': 1, 'name': 'some text'}, {'id': 2, 'name': 'some other text'}]
-    );
+export default class KillMonster extends React.Component{
 
-    const [message, setMessage] = useState('');
+    constructor(props) {
+        super(props);
+        this.state = {
+          message: '',
+          selectedOption: null,
+          token: props.token,
+          options : [{ value: '', label: 'Aguarde' }]
+        };
+    }
 
-    const kill = async e => {
+    componentDidMount(){
+        this.getMonsters();
+    }
+    
+    getMonsters = async () => {
+        const monsters = await api.get('/monster/list');
+        const options = new Array();
+        monsters.data.map(monster => {
+            const option = {value: monster._id, label: monster.name};
+            options.push(option);
+        });
+
+        this.setState({options})
+    }
+
+    setMessage = (message) => {
+        this.setState({ message });
+    };
+
+    handleChange = selectedOption => {
+        this.setState({ selectedOption });
+        //console.log(`Option selected:`, selectedOption.value);
+    };
+
+    kill = async e => {
         e.preventDefault();
-        
         try {
             const response = await api.post('/killed-monster/killed', 
-                {},
-                { headers: {'Authorization': `Bearer ${token}` } }
+                { monsterId: this.state.selectedOption.value},
+                { headers: {'Authorization': `Bearer ${this.state.token}` } }
             );
             if(response.status === 200){
-                setMessage('Matou!');
+                this.setMessage('Matou!');
             }
         } catch (error) {
             console.log(error.response.message);
-            setMessage('Não foi possível matar o monstro, corra!');
+            this.setMessage('Não foi possível matar o monstro, corra!');
         }
     }
 
-    const getMonsters = async () => {
-        const monsters = await api.get('/monster/list');
-        return monsters;
+    render (){
+
+        return (
+            <div className="block">
+                <img src={monsterIcon} alt="Ribon game" className="logo" />
+                <form onSubmit={this.kill}>
+                    <Select
+                        value={this.selectedOption}
+                        onChange={this.handleChange}
+                        options={this.state.options}
+                        />
+                    <button type="submit">Matar Monstro</button>
+                </form>
+                <span className="message">{this.state.message}</span>
+            </div>
+        );
     }
-
-    const onChange = event => {
-        this.setState({ selectedMsgTemplate: event.target.value });
-    };
-
-    return (
-        <div>
-            <form onSubmit={die}>
-                
-                <select className="form-control" value={currentValue} onChange={onChange}>
-                    <option value="">
-                        Select um monstro
-                    </option>
-                    {monsters.map(monster => (
-                        <option key={monster.id} value={monster.id}>
-                            {monster.name}
-                        </option>
-                    ))}
-                </select>
-                <button type="submit">Matar Monstro</button>
-            </form>
-            <span>{message}</span>
-        </div>
-    );
 }
