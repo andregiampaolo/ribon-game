@@ -7,8 +7,8 @@ import logo from '../assets/logo.svg'
 export default function Login( { history } ){
 
     const [form, setValues] = useState({
-        email: 'a@t.com',
-        password: '123'
+        email: '',
+        password: ''
     });
 
     const handleSubmit = async e => {
