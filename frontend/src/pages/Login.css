@@ -41,6 +41,10 @@
     cursor: pointer;
 }
 
+.login-container form button:hover {
+    background-color: #008182;
+}
+
 .link {
     color:#777;
 }
