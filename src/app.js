@@ -25,6 +25,8 @@ class AppController {
         this.express.use('/death',require('./routes/death'));
         this.express.use('/killed-monster',require('./routes/killed-monster'));
         this.express.use('/monster',require('./routes/monster'));
+        this.express.use('/user-trophy',require('./routes/user-trophy'));
+        
     }
 
     database(){
