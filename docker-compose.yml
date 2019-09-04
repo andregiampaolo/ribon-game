@@ -3,40 +3,46 @@ services:
   api1: 
     container_name: ribon-game-api1
     image: ribon-game-api1
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     command: npm run dev
     ports:
       - "3000"
     environment:
       - NUMBERSERVER=1
     volumes:
-      - ./:/usr/app
+      - ./backend/:/usr/app
     depends_on:
       - "mongo"
   api2: 
     container_name: ribon-game-api2
     image: ribon-game-api2
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     command: npm run dev
     ports:
       - "3000"
     environment:
       - NUMBERSERVER=2
     volumes:
-      - ./:/usr/app
+      - ./backend/:/usr/app
     depends_on:
       - "mongo"
   api3: 
     container_name: ribon-game-api3
     image: ribon-game-api3
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     command: npm run dev
     ports:
       - "3000"
     environment:
       - NUMBERSERVER=3
     volumes:
-      - ./:/usr/app
+      - ./backend/:/usr/app
     depends_on:
       - "mongo"
   mongo:
@@ -50,14 +56,27 @@ services:
   #   ports:
   #     - "1234:1234"
   nginx:
-    container_name: ribon-game-nginx
-    image: ribon-game-nginx
+    container_name: ribon-game-load-balancer
+    image: ribon-game-load-balancer
     build:
-      context: ./nginx
-      dockerfile: Dockerfile-dev
+      context: ./load-balancer
+      dockerfile: Dockerfile
+    expose:
+      - 4000
     ports:
-      - "80:80"
+      - "4000:80"
     links:
       - api1:api1
       - api2:api2
       - api3:api3
+  frontend:
+    container_name: ribon-game-frontend
+    image: ribon-game-frontend
+    build: ./frontend
+    expose:
+      - 80
+    ports:
+      - 80:3000
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/public:/usr/src/app/public
