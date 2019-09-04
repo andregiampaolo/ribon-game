@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
+import './GameComponents.css';
+
+import coin from '../../assets/coin.svg'
 
 export default function CollectCoin ( {token} ) {
 
@@ -15,29 +18,30 @@ export default function CollectCoin ( {token} ) {
                 { headers: {'Authorization': `Bearer ${token}` } }
             );
             if(response.status === 200){
-                 setMessage('Moeda coletada com sucesso!');
+                setQuantity('');
+                setMessage('Moeda coletada com sucesso!');
             }
         } catch (error) {
-            console.log(error.response.message);
+            console.log(error.message);
             setMessage('Não foi possível coletar');
         }
 
     }
 
     return (
-        <div>
+        <div className="block">
+            <img src={coin} alt="Ribon game" className="logo" />
             <form onSubmit={collectCoin}>
                 <input
                     type="text"
-                    placeholder="Quantidade de moedas quer coletar?"
+                    placeholder="Quer quantas moedas?"
                     name="quantity"
                     value={quantity}
                     onChange={e => setQuantity(e.target.value)}
                 />
                 <button type="submit">Coletar Moeda</button>
             </form>
-            <span>{message}</span>
-           
+            <span className="message">{message}</span>
         </div>
     );
 }
