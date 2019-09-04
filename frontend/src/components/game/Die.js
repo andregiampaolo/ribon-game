@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
 
+import './GameComponents.css';
+
+import dieIcon from '../../assets/die.svg'
+
 export default function Die ( {token} ) {
 
     const [message, setMessage] = useState('');
@@ -23,11 +27,13 @@ export default function Die ( {token} ) {
     }
 
     return (
-        <div>
+        <div className="block">
+            <img src={dieIcon} alt="Ribon game" className="logo" />
             <form onSubmit={die}>
                 <button type="submit">Morrer</button>
             </form>
-            <span>{message}</span>
+            <span className="message">{message}</span>
         </div>
+
     );
 }
