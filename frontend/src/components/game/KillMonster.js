@@ -51,7 +51,7 @@ export default class KillMonster extends React.Component{
                 this.setMessage('Matou!');
             }
         } catch (error) {
-            console.log(error.response.message);
+            console.log(error);
             this.setMessage('Não foi possível matar o monstro, corra!');
         }
     }
