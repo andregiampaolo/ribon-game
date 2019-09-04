@@ -21,7 +21,7 @@ export default class ListTrophy extends React.Component{
         const userTrophies = await api.get('/user-trophy/trophies', 
             { headers: {'Authorization': `Bearer ${this.state.token}` } }
         );
-        const trophies = new Array();
+        const trophies = [];
         userTrophies.data.map(userTrophy => {
             const trophy = {
                 id: userTrophy._id,
