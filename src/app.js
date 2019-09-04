@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('./database');
+const cors = require('cors');
 
 class AppController {
     constructor(){
@@ -12,6 +13,7 @@ class AppController {
     }
 
     middlewares(){
+        this.express.use(cors());
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended : false}));
     }
@@ -22,6 +24,9 @@ class AppController {
         this.express.use('/collected-coin',require('./routes/collected-coin'));
         this.express.use('/death',require('./routes/death'));
         this.express.use('/killed-monster',require('./routes/killed-monster'));
+        this.express.use('/monster',require('./routes/monster'));
+        this.express.use('/user-trophy',require('./routes/user-trophy'));
+        
     }
 
     database(){
