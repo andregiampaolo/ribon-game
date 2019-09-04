@@ -22,7 +22,7 @@ export default class KillMonster extends React.Component{
     
     getMonsters = async () => {
         const monsters = await api.get('/monster/list');
-        const options = new Array();
+        const options = [];
         monsters.data.map(monster => {
             const option = {value: monster._id, label: monster.name};
             options.push(option);
