@@ -60,10 +60,23 @@ services:
     image: ribon-game-load-balancer
     build:
       context: ./load-balancer
-      dockerfile: Dockerfile-lb
+      dockerfile: Dockerfile
+    expose:
+      - 4000
     ports:
-      - "80:80"
+      - "4000:80"
     links:
       - api1:api1
       - api2:api2
       - api3:api3
+  frontend:
+    container_name: ribon-game-frontend
+    image: ribon-game-frontend
+    build: ./frontend
+    expose:
+      - 80
+    ports:
+      - 80:3000
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/public:/usr/src/app/public
