@@ -4,6 +4,8 @@ import './Dashboard.css';
 import logo from '../assets/logo.svg'
 import trophyIcon from '../assets/trophy.svg'
 
+import ListTrophy from '../components/ListTrophy';
+
 export default function Dashboard( { match, history } ){
 
     const startGame = async e => {
@@ -19,10 +21,12 @@ export default function Dashboard( { match, history } ){
             <img src={logo} alt="Ribon game" className="logo" />
                 <div className="block-container">
                     <button type="button" onClick={startGame}>Jogar</button>
-                    <button type="button" onClick={logout}>Logout</button>
+                    <button type="button" onClick={logout}>Sair</button>
                 </div>
                 <div className="trophies-container">
-                    <img src={trophyIcon} alt="Ribon game" className="logo" />
+                    <img src={trophyIcon} alt="Ribon game" className="trophie-icon" />
+                    <h1>Troféus:</h1>
+                    <ListTrophy token={match.params.token}/>
                 </div>
         </div>
     );
