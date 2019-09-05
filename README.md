@@ -6,8 +6,10 @@
 
 ## Executar o projeto:
 
-Na pasta raiz do projeto, onde se localiza o arquivo `docker-compose.yml`, basta executar o comando `docker-compose up [-d]`
-(E aguardar...a primeira vez que o projeto é executa o build das imagens demora muito)
+Na pasta raiz do projeto, onde se localiza o arquivo `docker-compose.yml` execute os seguintes comandos:
+
+1. `docker-compose build` (o build pode demorar um pouco, são muitas umagens construidas)
+2. `docker-compose up [-d]`
 
 ## Observações:
 
