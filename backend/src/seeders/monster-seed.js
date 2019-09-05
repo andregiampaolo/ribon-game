@@ -29,17 +29,22 @@ const dropMonsterCollection = async () =>{
     ]);
 }
 
-const seed = async () => {
-    const db = await connectDb();
-    if(db){
-        await dropMonsterCollection();
-        const result = await insertMonstersOnDatabase();
-        if(result){
-            console.log('Monstros criados');
-            process.exit();
+module.exports = {
+    seed: async () => {
+        try {
+            const db = await connectDb();
+            if(db){
+                await dropMonsterCollection();
+                const result = await insertMonstersOnDatabase();
+                if(result){
+                    console.log('Monstros criados');
+                    return true;
+                } else {
+                    throw 'Não foi possível criar os montros';
+                }
+            }
+        } catch (error) {
+            throw error;
         }
-        console.log('Erro ao criar os monstros');
     }
-}
-
-seed();
+};
