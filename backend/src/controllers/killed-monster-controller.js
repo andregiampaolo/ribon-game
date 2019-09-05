@@ -1,5 +1,21 @@
 const KilledMonster = require('../models/killed-monster');
 const UserTrohpyService = require('../services/user-trophy-service');
+const Monster = require('../models/monster');
+
+const KilledMonsterException = function(message) {
+    this.message = message;
+    this.name = "KilledMonsterException";
+}
+
+const validateMonsterExists = async function(monsterId){
+    if(monsterId == null || monsterId == undefined){
+        throw new KilledMonsterException('Monster not informed');
+    }
+    const monster = Monster.findById(monsterId);
+    if(!monster){
+        throw new KilledMonsterException('Monster not found');
+    }
+};
 
 module.exports = {
     async killed(req, res){
@@ -7,16 +23,10 @@ module.exports = {
             const userId = req.userId;
             const {monsterId} = req.body;
 
+            await validateMonsterExists(monsterId);
 
             const killed = await KilledMonster.create({user: userId, monster: monsterId});
-            const fieldIncrease = 'totalKilledMonster';
-            const valueIncrease = 1;
-            const user = await UserTrohpyService.increaseUserTotalField(fieldIncrease, userId, valueIncrease);
-            const trophy = await UserTrohpyService.getTrophyEarnedByValue('killed_monster', user.totalKilledMonster);
-            const userHasTrophy = await UserTrohpyService.userHasTrophy(user, trophy);
-
-            if(userHasTrophy.length == 0)
-                await UserTrohpyService.giveTrohpyToUser(userId, trophy);
+            await UserTrohpyService.giveKilledMonsterTrophyIfDeservers(userId);
 
             return res.send(killed);
             
