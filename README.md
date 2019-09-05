@@ -6,10 +6,9 @@
 
 ## Executar o projeto:
 
-Na pasta raiz do projeto, onde se localiza o arquivo `docker-compose.yml` execute os seguintes comandos:
-
-1. `docker-compose build` (o build pode demorar um pouco, são muitas umagens construidas)
-2. `docker-compose up [-d]`
+1. Na pasta `./backend` execute o comando `npm install`;
+2. Na pasta `./frontend` execute o comando `npm install`;
+3. Na pasta raiz do projeto, execute o comando `docker-compose up`;
 
 ## Observações:
 
@@ -20,7 +19,6 @@ Na pasta raiz do projeto, onde se localiza o arquivo `docker-compose.yml` execut
 
 Após executar a criação dos containers, vamos popular o banco de dados. Para isto execute os seguintes comandos dentro da pasta `./backend`:
 
-1. `npm install mongoose`
-2. `npm run seed`
+1. `npm run seed`
 
-Bom Jogo :)
+Boa diversão (:
