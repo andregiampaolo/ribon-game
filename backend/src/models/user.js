@@ -52,7 +52,7 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
-UserSchema.statics.generateToken = function(params = {}) {
+UserSchema.statics.generateAuthorizationToken = function(params = {}) {
     return jwt.sign(params, process.env.JWT_SECRET_KEY, {
         expiresIn: 86400
     });
