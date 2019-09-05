@@ -24,10 +24,10 @@ module.exports = {
             
             return res.send({ 
                 user,
-                token: User.generateToken({ id: user.id })
+                token: User.generateAuthorizationToken({ id: user.id })
             });
-        }catch(err){
-            return res.status(400).send({name: err.name, message: err.message});
+        }catch(error){
+            return res.status(400).send({name: error.name, message: error.message});
         }
     },
     async list(req, res){
@@ -35,7 +35,7 @@ module.exports = {
             const users = await User.find({});
             return res.send(users);
         } catch (error) {
-            return res.status(400).send({name: err.name, message: err.message});
+            return res.status(400).send({name: error.name, message: error.message});
         }
     },
     async authenticate(req, res){
@@ -45,21 +45,21 @@ module.exports = {
             const user = await User.findOne({email}).select('+password');
 
             if(!user){
-                res.status(400).send({error: 'User or password invalid'});
+                return res.status(400).send({error: 'User or password invalid'});
             }
 
             if(! await bcryptjs.compare(password, user.password)){
-                res.status(400).send({error: 'User or password invalid'});
+                return res.status(400).send({error: 'User or password invalid'});
             }
 
             user.password = undefined;
             res.send({
                 user,
-                token: User.generateToken({ id: user.id })
+                token: User.generateAuthorizationToken({ id: user.id })
             });
 
         } catch (error) {
-            return res.status(400).send({name: err.name, message: err.message});
+            return res.status(400).send({name: error.name, message: error.message});
         }
     }
 };
