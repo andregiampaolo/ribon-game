@@ -92,18 +92,24 @@ const dropTrophyCollection = async () =>{
     ]);
 }
 
-
-const seed = async () => {
-    const db = await connectDb();
-    if(db){
-        await dropTrophyCollection();
-        const result = await insertTrophiesOnDatabase();
-        if(result){
-            console.log('Troféus criados');
-            process.exit();
+module.exports = {
+    seed: async () => {
+        try {
+            
+            const db = await connectDb();
+            if(db){
+                await dropTrophyCollection();
+                const result = await insertTrophiesOnDatabase();
+                if(result){
+                    console.log('Troféus criados');
+                    return true;
+                } else {
+                    throw 'Não foi possível criar os troféus';
+                }
+            }
+        } catch (error) {
+            throw error;
+            
         }
-        console.log('Erro ao criar os troféus');
     }
 }
-
-seed();
