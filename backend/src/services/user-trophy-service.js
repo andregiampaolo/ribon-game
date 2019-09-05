@@ -1,36 +1,61 @@
-const User = require('../models/user');
-const Trophy = require('../models/trophy');
+const UserService = require('./user-service');
+const TrophyService = require('./trophy-service');
 const UserTrophy = require('../models/user-trophy');
-
-const TrophyException = function(message) {
-    this.message = message;
-    this.name = "TrophyException";
-}
 
 const UserTrophyService = {
 
-    async increaseUserTotalField(totalField, userId, valueIncrease){
-        const increase = {};
-        increase[totalField] = valueIncrease;
-        return await User.findByIdAndUpdate(userId,
-            { $inc: increase},
-            { new: true }
-        );
+    async giveKilledMonsterTrophyIfDeservers(userId){
+        try {
+            const fieldNameDb = 'totalKilledMonster';
+            const valueIncrease = 1;
+            const action = 'killed_monster';
+            await UserTrophyService.giveTrophyIfDeservers(userId, fieldNameDb, action, valueIncrease);
+            return true;
+        } catch (error) {
+            throw error;
+        }
     },
-    async getTrophyEarnedByValue(action, value){
-        const trophy = await Trophy.find({
-            action: action, 
-            value: { $lte: value }
-        })
-        .select('id')
-        .sort({value: -1})
-        .limit(1);
-        if(trophy.length == 0)
-            throw new TrophyException("Trophy doesn't exists in database");
-        return trophy;
+    async giveCollectedCoinTrophyIfDeservers(userId, valueIncrease){
+        try {
+            const fieldNameDb = 'totalCollectedCoins';
+            const action = 'collected_coin';
+            await UserTrophyService.giveTrophyIfDeservers(userId, fieldNameDb, action, valueIncrease);
+            return true;
+        } catch (error) {
+            throw error;
+        }
     },
-    async userHasTrophy(user, trophy){
-        return await UserTrophy.find({user:user.id, trophy:trophy[0].id});
+
+    async giveDeathTrophyIfDeservers(userId){
+        try {
+            const fieldNameDb = 'totalDeaths';
+            const valueIncrease = 1;
+            const action = 'death';
+            await UserTrophyService.giveTrophyIfDeservers(userId, fieldNameDb, action, valueIncrease);
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    async giveTrophyIfDeservers(userId, fieldNameDb, action, valueIncrease){
+        try {
+            const user = await UserService.increaseUserTotalField(fieldNameDb, userId, valueIncrease);
+            const trophy = await TrophyService.getTrophyEarnedByValue(action, user[fieldNameDb]);
+            const userHasTrophy = await UserTrophyService.userHasTrophy(userId, trophy);
+
+            if(userHasTrophy.length == 0)
+                await UserTrophyService.giveTrohpyToUser(userId, trophy);
+            return true;
+
+        } catch (error) {
+            throw error;
+        }
+
+    },
+
+    async userHasTrophy(userId, trophy){
+        return await UserTrophy.find({user:userId, trophy:trophy[0].id});
     },
     async giveTrohpyToUser(userId, trophy){
         return await UserTrophy.create({user:userId, trophy: trophy[0].id});
